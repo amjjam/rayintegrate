@@ -1,6 +1,6 @@
 #include "../include/rayintegrate.H"
 
-RAYINTEGRATE::RAYINTEGRATE(MODEL *m){
+RAYINTEGRATE::RAYINTEGRATE(RAYINTEGRATEMODEL *m){
   RAYINTEGRATE::m=m;
 }
 
@@ -25,7 +25,6 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
   int i;
   double r;
   
-  verify(p);
   verify(direction);
 
   // Position
@@ -42,7 +41,7 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
   
   for(r=0;distance(start,p)<stopdistance;addvector(p,d)){
     if(distance(start,p)>=startdistance)
-      r+=m->(p);
+      r+=m->get(p);
   }
   
   return r;
@@ -64,15 +63,16 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
   ny and nz are the number of pixels. 150 is appropriate
   ===========================================================================*/
 					
-std::vector<std::vector<double> > image(std::vector<double> pos, 
-					std::vector<double> x,
-					std::vector<double> y,
-					std::vector<double> z,
-					double startdistance,
-					double stopdistance,
-					double delta,
-					double fovy, double fovz,
-					int ny, int nz){
+std::vector<std::vector<double> > 
+RAYINTEGRATE::image(std::vector<double> pos, 
+		    std::vector<double> x,
+		    std::vector<double> y,
+		    std::vector<double> z,
+		    double startdistance,
+		    double stopdistance,
+		    double delta,
+		    double fovy, double fovz,
+		    int ny, int nz){
 
   // Create the image
   std::vector<std::vector<double> > img;
@@ -83,19 +83,19 @@ std::vector<std::vector<double> > image(std::vector<double> pos,
   // Calculate the vectors dy and dz which are step sizes in the y and
   // z direction which added to vector x to get look direction
   std::vector<double> dy,dz;
-  double ldy,ldz;
-  ldy=2*length(x)*tan(fovy/2);
-  ldz=2*length(x)*tan(fovz/2);
-  dy=muliply(y,1./length(y))*2*length(x)*tan(fovy/2/180*M_PI)/ny;
-  dz=muliply(z,1./length(z))*2*length(x)*tan(fovz/2/180*M_PI)/nz;
-  std::vector<double> vy=addvector(x,multply(dy,-(double)(ny+1)/2));
+  //double ldy,ldz;
+  //ldy=2*length(x)*tan(fovy/2);
+  //ldz=2*length(x)*tan(fovz/2);
+  dy=multiply(y,1./length(y)*2*length(x)*tan(fovy/2/180*M_PI)/ny);
+  dz=multiply(z,1./length(z)*2*length(x)*tan(fovz/2/180*M_PI)/nz);
+  std::vector<double> vy=addvector(x,multiply(dy,-(double)(ny+1)/2));
   
   // Loop over the pixels in the image
   for(int i=0;i<ny;i++){
     std::vector<double> vz=addvector(x,multiply(dz,-(double)(nz+1)/2));
     for(int j=0;j<nz;j++){
-      direction=addvector(addvector(x,vy),vz);
-      image[i][j]=
+      std::vector<double> direction=addvector(addvector(x,vy),vz);
+      img[i][j]=
 	integrate(pos,direction,startdistance,stopdistance,delta);
       vz=addvector(vz,dz);
     }
@@ -118,7 +118,7 @@ double RAYINTEGRATE::length(std::vector<double> v){
 }
 
 
-std::vector<double> RAYINTEGRATE::multipley(std::vector<double> v,
+std::vector<double> RAYINTEGRATE::multiply(std::vector<double> v,
 					    double f){
   verify(v);
 
@@ -136,7 +136,7 @@ double RAYINTEGRATE::distance(std::vector<double> p,
 
   double t,d=0;
 
-  for(i=0;i<3;i++){
+  for(int i=0;i<3;i++){
     t=p[i]-q[i];
     d+=t*t;
   }

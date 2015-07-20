@@ -3,6 +3,15 @@
  * location to a finite distance.                                    *
  *********************************************************************/
 
+#ifndef _RAYINTEGRATE_H_
+#define _RAYINTEGRATE_H_
+
+#include <vector>
+#include <iostream>
+
+#include <stdlib.h>
+#include <math.h>
+
 class RAYINTEGRATEMODEL{
 public:
   RAYINTEGRATEMODEL();
@@ -39,3 +48,5 @@ private:
   std::vector<double> addvector(std::vector<double> p, std::vector<double> q);
   bool verify(std::vector<double> v);
 };
+
+#endif
