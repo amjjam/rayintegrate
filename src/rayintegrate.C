@@ -85,12 +85,12 @@ RAYINTEGRATE::image(std::vector<double> pos,
   dz=multiply(z,1./length(z)*2*length(x)*tan(fovz/2/180*M_PI)/nz);
   std::vector<double> vy=multiply(dy,-(double)(ny+1)/2);
 
-  std::cout << x[0] << " " << x[1] << " " << x[2] << std::endl;
-  std::cout << y[0] << " " << y[1] << " " << y[2] << std::endl;
-  std::cout << z[0] << " " << z[1] << " " << z[2] << std::endl;
-  std::cout << dy[0] << " " << dy[1] << " " << dy[2] << std::endl;
-  std::cout << dz[0] << " " << dz[1] << " " << dz[2] << std::endl;
-  std::cout << vy[0] << " " << vy[1] << " " << vy[2] << std::endl;
+  // std::cout << x[0] << " " << x[1] << " " << x[2] << std::endl;
+  // std::cout << y[0] << " " << y[1] << " " << y[2] << std::endl;
+  // std::cout << z[0] << " " << z[1] << " " << z[2] << std::endl;
+  // std::cout << dy[0] << " " << dy[1] << " " << dy[2] << std::endl;
+  // std::cout << dz[0] << " " << dz[1] << " " << dz[2] << std::endl;
+  // std::cout << vy[0] << " " << vy[1] << " " << vy[2] << std::endl;
   
   // Loop over the pixels in the image
   for(int i=0;i<ny;i++){
