@@ -29,8 +29,11 @@ double MODEL::get(std::vector<double> p){
   r=sqrt(r);
 
   if(r<=6&&r>=1){
-    if(p[0]>0)
+    if(p[0]>0){
+      if(p[2]<0)
+	return 3;
       return 2;
+    }
     return 1;
   }
   
