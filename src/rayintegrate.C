@@ -22,7 +22,6 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
 			       double startdistance, 
 			       double stopdistance,
 			       double delta){
-  int i;
   double r;
   
   verify(direction);
@@ -31,15 +30,11 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
   std::vector<double> p=start;
   
   // Step vector
-  std::vector<double> d=direction;
-  double f;
-  for(i=0;i<3;i++)
-    f+=direction[i]*direction[i];
-  f=sqrt(f)*delta;
-  for(i=0;i<3;i++)
-    d[i]*=f;
+  std::vector<double> d=multiply(direction,delta/length(direction));
   
-  for(r=0;distance(start,p)<stopdistance;addvector(p,d)){
+  for(r=0;distance(start,p)<stopdistance;p=addvector(p,d)){
+    //std::cout << p[0] << " " << p[1] << " " << p[2] << std::endl;
+    //std::cout << d[0] << " " << d[1] << " " << d[2] << std::endl;
     if(distance(start,p)>=startdistance)
       r+=m->get(p);
   }
@@ -89,6 +84,13 @@ RAYINTEGRATE::image(std::vector<double> pos,
   dy=multiply(y,1./length(y)*2*length(x)*tan(fovy/2/180*M_PI)/ny);
   dz=multiply(z,1./length(z)*2*length(x)*tan(fovz/2/180*M_PI)/nz);
   std::vector<double> vy=addvector(x,multiply(dy,-(double)(ny+1)/2));
+
+  std::cout << x[0] << " " << x[1] << " " << x[2] << std::endl;
+  std::cout << y[0] << " " << y[1] << " " << y[2] << std::endl;
+  std::cout << z[0] << " " << z[1] << " " << z[2] << std::endl;
+  std::cout << dy[0] << " " << dy[1] << " " << dy[2] << std::endl;
+  std::cout << dz[0] << " " << dz[1] << " " << dz[2] << std::endl;
+  std::cout << vy[0] << " " << vy[1] << " " << vy[2] << std::endl;
   
   // Loop over the pixels in the image
   for(int i=0;i<ny;i++){

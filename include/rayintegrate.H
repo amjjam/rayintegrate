@@ -14,8 +14,8 @@
 
 class RAYINTEGRATEMODEL{
 public:
-  RAYINTEGRATEMODEL();
-  ~RAYINTEGRATEMODEL();
+  RAYINTEGRATEMODEL(){};
+  ~RAYINTEGRATEMODEL(){};
   virtual double get(std::vector<double>)=0;
 private:
 
