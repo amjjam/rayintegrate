@@ -11,6 +11,14 @@ RAYINTEGRATE::~RAYINTEGRATE(){
 
 
 /*====================================================================
+  void setModel(RAYINTEGRATEMODEL *m) - set the model to use
+  ===================================================================*/
+void RAYINTEGRATE::setModel(RAYINTEGRATEMODEL *m){
+  RAYINTEGRATE::m=m;
+}
+
+
+/*====================================================================
   double integrate(std::vector<double> start, std::vector<double>
   direction, double startdistance, double stopdistance, double delta)
   
