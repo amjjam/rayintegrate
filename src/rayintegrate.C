@@ -25,7 +25,8 @@ void RAYINTEGRATE::setModel(RAYINTEGRATEMODEL *m){
   integrate the model m along ray path using start and stop distance
   and step size obtained from the model.
   ===================================================================*/
-double integrate(std::vector<double> start, std::vector<double> direction){
+double RAYINTEGRATE::integrate(std::vector<double> start, 
+			       std::vector<double> direction){
   double startdistance=m->losStart(start,direction);
   double stopdistance=m->losStop(stop,direction);
   double delta=m->losStep(stop,direction);
