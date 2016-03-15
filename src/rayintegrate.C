@@ -121,8 +121,6 @@ RAYINTEGRATE::image(std::vector<double> pos,
   return img;
 }
 
-}
-
 					
 /*============================================================================
   vector<vector<double> > image(std::vector<double> pos,
