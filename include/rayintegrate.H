@@ -16,9 +16,12 @@ class RAYINTEGRATEMODEL{
 public:
   RAYINTEGRATEMODEL(){};
   ~RAYINTEGRATEMODEL(){};
+  virtual double losStart(std::vector<double>, std::vector<double>)=0;
+  virtual double losStop(std::vector<double>, std::vector<double>)=0;
+  virtual double losStep(std::vector<double>, std::vector<double>)=0;
   virtual double get(std::vector<double>)=0;
 private:
-
+  
 };
 
 
