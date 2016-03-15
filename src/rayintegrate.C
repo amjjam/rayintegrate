@@ -67,8 +67,65 @@ double RAYINTEGRATE::integrate(std::vector<double> start,
   return r;
 }
 
+
+
 /*============================================================================
-  vector<vector<double> > imagestd::vector<double> pos,
+  vector<vector<double> > image(std::vector<double> pos,
+  std::vector<double> x, std::vector<double> y, std::vector<double> z,
+  double startdistance, double stopdistance, double delta, double
+  fovy, double fovz, int ny, int nz)
+
+  pos is the location of the camera
+  x is the look-direction of the camera
+  y is the camera y-axis
+  z is the camera z-axis
+  fovy, fovz are the fields of view. 20 degrees is appropriate
+  ny and nz are the number of pixels. 150 is appropriate
+  ===========================================================================*/
+std::vector<std::vector<double> >
+RAYINTEGRATE::image(std::vector<double> pos,
+		    std::vector<double> x,
+		    std::vector<double> y,
+		    std::vector<double> z,
+		    double fovy, double fovz,
+		    int ny, int nz){
+
+  // Create the image
+  std::vector<std::vector<double> > img;
+  img.resize(ny);
+  for(int i=0;i<nz;i++)
+    img[i].resize(nz);
+  
+  // Calculate the vectors dy and dz which are step sizes in the y and
+  // z direction which added to vector x to get look direction
+  std::vector<double> dy,dz;
+  //double ldy,ldz;
+  //ldy=2*length(x)*tan(fovy/2);
+  //ldz=2*length(x)*tan(fovz/2);
+  dy=multiply(y,1./length(y)*2*length(x)*tan(fovy/2/180*M_PI)/ny);
+  dz=multiply(z,1./length(z)*2*length(x)*tan(fovz/2/180*M_PI)/nz);
+  std::vector<double> vy=multiply(dy,-(double)(ny+1)/2);
+  
+  // Loop over the pixels in the image
+  for(int i=0;i<ny;i++){
+    std::vector<double> vz=multiply(dz,-(double)(nz+1)/2);
+    for(int j=0;j<nz;j++){
+      std::vector<double> direction=addvector(addvector(x,vy),vz);
+      img[i][j]=
+	integrate(pos,direction);
+      vz=addvector(vz,dz);
+    }
+    vy=addvector(vy,dy);
+  }
+
+  return img;
+}
+
+}
+
+					
+/*============================================================================
+  vector<vector<double> > image(std::vector<double> pos,
   std::vector<double> x, std::vector<double> y, std::vector<double> z,
   double startdistance, double stopdistance, double delta, double
   fovy, double fovz, int ny, int nz)

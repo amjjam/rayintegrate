@@ -36,6 +36,12 @@ public:
 		   std::vector<double> direction,
 		   double startdistance, double stopdistance,
 		   double delta);
+  std::vector<std::vector<double> > image(std::vector<double> pos,
+					  std::vector<double> x,
+					  std::vector<double> y,
+					  std::vector<double> z,
+					  double fovy, double fovz,
+					  int ny, int nz);
   std::vector<std::vector<double> > image(std::vector<double> pos, 
 					  std::vector<double> x,
 					  std::vector<double> y,
