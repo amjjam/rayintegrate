@@ -30,6 +30,8 @@ public:
   RAYINTEGRATE(RAYINTEGRATEMODEL *m);
   ~RAYINTEGRATE();
   void setModel(RAYINTEGRATEMODEL *m);
+  double integrate(std::vector<double> start,
+		   std::vector<double> direction);
   double integrate(std::vector<double> start, 
 		   std::vector<double> direction,
 		   double startdistance, double stopdistance,
