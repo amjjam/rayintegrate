@@ -28,8 +28,8 @@ void RAYINTEGRATE::setModel(RAYINTEGRATEMODEL *m){
 double RAYINTEGRATE::integrate(std::vector<double> start, 
 			       std::vector<double> direction){
   double startdistance=m->losStart(start,direction);
-  double stopdistance=m->losStop(stop,direction);
-  double delta=m->losStep(stop,direction);
+  double stopdistance=m->losStop(start,direction);
+  double delta=m->losStep(start,direction);
 
   return integrate(start,direction,startdistance,stopdistance,delta);
 }
